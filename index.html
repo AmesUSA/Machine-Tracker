@@ -2,10 +2,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Machine Shot Tracker</title>
+  <title>C48 Machine Shot Tracker</title>
   <meta charset="UTF-8">
   <script>
+    const savedMachines = {
+      "#1": 9.57,
+      "#5": 10.04,
+      "#6": 9.05,
+      "#8": 8.92,
+      "#9": 9.60,
+      "#10": 8.89,
+      "#11": 8.91,
+      "#12": 9.50
+    };
+
     const machines = [];
+
+    function selectMachine() {
+      const selected = document.getElementById("machineNumber").value;
+      const cycleTimeInput = document.getElementById("cycleTime");
+      if (savedMachines[selected]) {
+        cycleTimeInput.value = savedMachines[selected];
+      }
+    }
 
     function addMachine() {
       const machine = document.getElementById("machineNumber").value;
@@ -47,9 +66,19 @@
   </script>
 </head>
 <body>
-  <h1>Machine Shot Tracker</h1>
+  <h1>C48 Machine Shot Tracker</h1>
   <form onsubmit="event.preventDefault(); addMachine();">
-    <input id="machineNumber" placeholder="Machine #" required />
+    <select id="machineNumber" onchange="selectMachine()" required>
+      <option value="">Select Machine</option>
+      <option value="#1">#1</option>
+      <option value="#5">#5</option>
+      <option value="#6">#6</option>
+      <option value="#8">#8</option>
+      <option value="#9">#9</option>
+      <option value="#10">#10</option>
+      <option value="#11">#11</option>
+      <option value="#12">#12</option>
+    </select>
     <input id="currentShot" type="number" placeholder="Current Shot Count" required />
     <input id="cycleTime" type="number" step="0.01" placeholder="Cycle Time (sec)" required />
     <input id="targetShot" type="number" placeholder="Target Shot (default 2000)" />
