@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Machine Shot Tracker</title>
+  <meta charset="UTF-8">
+  <script>
+    const machines = [];
+
+    function addMachine() {
+      const machine = document.getElementById("machineNumber").value;
+      const currentShot = parseInt(document.getElementById("currentShot").value);
+      const cycleTime = parseFloat(document.getElementById("cycleTime").value);
+      const targetShot = parseInt(document.getElementById("targetShot").value) || 2000;
+
+      const finishTime = new Date(Date.now() + ((targetShot - currentShot) * cycleTime * 1000));
+      machines.push({ machine, currentShot, cycleTime, targetShot, finishTime, alerted1980: false, alerted2000: false });
+
+      updateList();
+    }
+
+    function updateList() {
+      const list = document.getElementById("machineList");
+      list.innerHTML = "";
+      machines.forEach(m => {
+        const li = document.createElement("li");
+        li.textContent = `Machine ${m.machine} - Finish at ${m.finishTime.toLocaleTimeString()}`;
+        list.appendChild(li);
+      });
+    }
+
+    setInterval(() => {
+      const now = new Date();
+      machines.forEach(m => {
+        const elapsed = Math.floor((now - (m.finishTime - ((m.targetShot - m.currentShot) * m.cycleTime * 1000))) / (m.cycleTime * 1000));
+        const current = m.currentShot + elapsed;
+        if (!m.alerted1980 && current >= 1980) {
+          alert(`Machine ${m.machine} approaching target (1980 shots)`);
+          m.alerted1980 = true;
+        }
+        if (!m.alerted2000 && current >= 2000) {
+          alert(`Machine ${m.machine} has reached 2000 shots`);
+          m.alerted2000 = true;
+        }
+      });
+    }, 10000);
+  </script>
+</head>
+<body>
+  <h1>Machine Shot Tracker</h1>
+  <form onsubmit="event.preventDefault(); addMachine();">
+    <input id="machineNumber" placeholder="Machine #" required />
+    <input id="currentShot" type="number" placeholder="Current Shot Count" required />
+    <input id="cycleTime" type="number" step="0.01" placeholder="Cycle Time (sec)" required />
+    <input id="targetShot" type="number" placeholder="Target Shot (default 2000)" />
+    <button type="submit">Add Machine</button>
+  </form>
+  <ul id="machineList"></ul>
+</body>
+</html>
