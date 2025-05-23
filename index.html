@@ -3,31 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Machine Tracker</title>
+  <title>Machine Tracker App</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+  <script defer src="app.js"></script>
 </head>
 <body>
-  <h1>Machine Tracker App</h1>
-  <div id="machine-tracker">
-    <form id="shotForm">
-      <label for="machine">Machine #:</label>
-      <input type="text" id="machine" name="machine" required />
-      <label for="shotCount">Shot Count:</label>
-      <input type="number" id="shotCount" name="shotCount" required />
-      <button type="submit">Submit</button>
-    </form>
-    <ul id="logList"></ul>
-  </div>
-
-  <div id="message-board">
-    <h2>Message Board</h2>
-    <form id="messageForm">
-      <input type="text" id="messageInput" placeholder="Enter message" required />
-      <button type="submit">Post</button>
-    </form>
-    <ul id="messages"></ul>
-  </div>
-
-  <script src="script.js"></script>
+  <header>Machine Tracker App</header>
+  <main class="p-4">
+    <h1 class="text-2xl font-bold mb-4">Machine Shot Tracker</h1>
+    <button id="toggle-tippy" class="mb-4 bg-yellow-600 text-white px-4 py-2 rounded relative">
+      Toggle Tippy Notes
+      <span id="tippy-alert-dot" class="hidden absolute top-0 right-0 w-3 h-3 bg-red-600 rounded-full"></span>
+    </button>
+    <section id="machine-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></section>
+    <section class="mt-6">
+      <button id="export-log" class="bg-green-600 text-white px-4 py-2 rounded">Export Logs</button>
+    </section>
+    <section class="mt-6">
+      <h2 class="text-xl font-semibold mb-2">Message Board</h2>
+      <textarea id="message-board" class="w-full p-2 border rounded" rows="4" placeholder="Leave a message for the team..."></textarea>
+      <button id="save-message" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">Save Message</button>
+      <ul id="message-list" class="mt-4 list-disc pl-5"></ul>
+    </section>
+  </main>
+  <aside id="tippy-sidebar" class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg p-4 overflow-y-auto hidden">
+    <h2 class="text-lg font-bold mb-4">Tippy Notes</h2>
+    <div id="tippy-notes" class="mb-6"></div>
+    <h3 class="text-md font-semibold mb-1">Shift Manager Notes</h3>
+    <div class="mb-4">
+      <label class="font-medium">1st Shift <span id="alert-1st" class="text-red-500 hidden">●</span></label>
+      <textarea class="shift-note w-full p-2 border rounded" data-shift="1st" placeholder="Note for 1st shift..."></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="font-medium">2nd Shift <span id="alert-2nd" class="text-red-500 hidden">●</span></label>
+      <textarea class="shift-note w-full p-2 border rounded" data-shift="2nd" placeholder="Note for 2nd shift..."></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="font-medium">3rd Shift <span id="alert-3rd" class="text-red-500 hidden">●</span></label>
+      <textarea class="shift-note w-full p-2 border rounded" data-shift="3rd" placeholder="Note for 3rd shift..."></textarea>
+    </div>
+    <h3 class="text-md font-semibold mb-2">Maintenance Calendar</h3>
+    <div id="calendar" class="grid grid-cols-7 gap-2 text-sm"></div>
+  </aside>
 </body>
 </html>

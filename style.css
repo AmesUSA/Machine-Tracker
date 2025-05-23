@@ -1,0 +1,5 @@
+body { font-family: sans-serif; background-color: #f3f4f6; margin: 0; }
+header { background: #1e40af; color: white; text-align: center; padding: 1rem; font-size: 1.5rem; }
+.machine-card { background: white; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+textarea { width: 100%; margin-top: 0.25rem; }
+button { margin-top: 0.5rem; }
