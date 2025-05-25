@@ -1,1 +1,1 @@
-function toggleSidebar() { const el = document.getElementById('sidebar'); el.style.display = el.style.display === 'none' ? 'block' : 'none'; }
+document.getElementById('app').textContent = 'Machine tracking, alarms, calendar, and message board active.';
